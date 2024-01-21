@@ -1,21 +1,38 @@
 // [Template no Kotlin Playground](https://pl.kotl.in/WcteahpyN)
 
-enum class Nivel { BASICO, INTERMEDIARIO, DIFICIL }
+enum class Nivel { BASICO, INTERMEDIARIO, AVANCADO }
 
-class Usuario
+data class Usuario(val nome: String)
 
-data class ConteudoEducacional(var nome: String, val duracao: Int = 60)
+data class ConteudoEducacional(val nome: String, val duracao: Int)
 
-data class Formacao(val nome: String, var conteudos: List<ConteudoEducacional>) {
+data class Formacao(val nome: String, var conteudos: List<ConteudoEducacional>, val nivel: Nivel) {
 
     val inscritos = mutableListOf<Usuario>()
     
-    fun matricular(usuario: Usuario) {
-        TODO("Utilize o parâmetro $usuario para simular uma matrícula (usar a lista de $inscritos).")
+    fun matricular(vararg usuario: Usuario) {
+        for(unique in usuario){
+            inscritos.add(unique)
+        }
     }
 }
 
 fun main() {
-    TODO("Analise as classes modeladas para este domínio de aplicação e pense em formas de evoluí-las.")
-    TODO("Simule alguns cenários de teste. Para isso, crie alguns objetos usando as classes em questão.")
+    val conteudos = mutableListOf<ConteudoEducacional>()
+    conteudos.add(ConteudoEducacional("Introducao ao C#", 30));
+    conteudos.add(ConteudoEducacional("Funcoes com C#", 40));
+    conteudos.add(ConteudoEducacional("Exceptions com C#", 50));
+    
+    val cSharp = Formacao("Curso Completo de C#", conteudos, Nivel.INTERMEDIARIO)
+    
+    var alunos = mutableListOf<Usuario>()
+    alunos.add(Usuario("Alexandre"))
+    alunos.add(Usuario("Felipe"))
+    alunos.add(Usuario("Gabriel"))
+    alunos.add(Usuario("Jonathan"))
+    
+    cSharp.matricular(*alunos.toTypedArray())
+    
+    println(cSharp)
+    println(cSharp.inscritos)
 }
